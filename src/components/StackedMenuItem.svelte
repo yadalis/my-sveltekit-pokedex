@@ -1,10 +1,15 @@
 <script>
-	import {handleCenterMenuItemsClick, handleRightMenuItemsClick} from '../stores/menubandstore';
+	import { handleCenterMenuItemsClick, handleRightMenuItemsClick } from '../stores/menubandstore';
+
 	export let menuText = '';
 	export let svgPath = '';
 	// export let isDisabled = false;
 	export let isActive = false;
 	export let id = 0;
+
+	// export let menuItemAttrs = {  };
+
+	// const { id, svgPath, menuText, isActive } = { ...menuItemAttrs };
 </script>
 
 <!-- focus:bg-gradient-to-tr focus:from-blue-900  focus:to-indigo-500 
@@ -31,11 +36,11 @@
 		class="h-5 w-8 text-white  "
 		stroke="currentColor"
 		><path
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			stroke-width="2"
-			d={svgPath}
-		/></svg
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		stroke-width="2"
+		d={svgPath}
+	/></svg
 	>
 	<span class="text-white font-thin text-sm tracking-tight whitespace-nowrap">{menuText}</span>
 </button>
