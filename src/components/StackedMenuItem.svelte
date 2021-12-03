@@ -1,7 +1,7 @@
 <script>
 	import {handleCenterMenuItemsClick, handleRightMenuItemsClick} from '../stores/menubandstore';
 	export let menuText = '';
-	export let svgElementPath = '';
+	export let svgPath = '';
 	// export let isDisabled = false;
 	export let isActive = false;
 	export let id = 0;
@@ -18,9 +18,9 @@
 	class="flex flex-col justify-center items-center  hover:bg-gray-700 space-y-2 w-20 pt-2
     {isActive === true ? 'bg-gradient-to-tr from-blue-900  to-indigo-500': ''} "
 	on:click={() => {
-		if (id <= 8 ) {
+		if (id > 0 && id <= 8 ) {
 			handleCenterMenuItemsClick(id);	
-		} else {
+		} else if(id > 8 && id <= 12){
 			handleRightMenuItemsClick(id);
 		}
 	}}
@@ -34,7 +34,7 @@
 			stroke-linecap="round"
 			stroke-linejoin="round"
 			stroke-width="2"
-			d={svgElementPath}
+			d={svgPath}
 		/></svg
 	>
 	<span class="text-white font-thin text-sm tracking-tight whitespace-nowrap">{menuText}</span>
