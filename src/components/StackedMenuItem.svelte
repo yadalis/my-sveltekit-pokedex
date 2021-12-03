@@ -15,8 +15,8 @@
 
 <button
 	{id}
-	class="flex flex-col justify-center items-center  hover:bg-gray-700 space-y-2 w-20 pt-2
-    {isActive === true ? 'bg-gradient-to-bl from-indigo-500  to-red-700': ''} "
+	class="flex flex-col justify-center items-center  hover:bg-gray-700 space-y-2 w-20 pt-2 rounded-t-md 
+    {isActive === true ? 'bg-gradient-to-bl from-indigo-500 to-blue-700': ''} "
 	on:click={() => {
 		if (id > 0 && id <= 8 ) {
 			handleCenterMenuItemsClick(id);	
