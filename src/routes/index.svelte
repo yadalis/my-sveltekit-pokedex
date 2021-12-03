@@ -1,7 +1,5 @@
 <script>
-	import SMI from "../components/StackedMenuItem.svelte";
 	import MenuBand from "../components/MenuBand.svelte";
-
 </script>
 <svelte:head><title>Paint 3D - full app work!</title></svelte:head>
 

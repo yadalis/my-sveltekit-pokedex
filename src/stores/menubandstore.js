@@ -77,3 +77,37 @@ export const rightMenuBandSVGItemPathList = writable([
 		isActive: false
 	},
 ]);
+
+export function handleCenterMenuItemsClick(id) {
+	let foundMenuItem  = centerMenuBandSVGItemPathList.update((centerMenuList => {
+		return centerMenuList.map(item => {
+			if (item.id === id)
+				return {...item, isActive: true}
+			else
+				return {...item, isActive: false}
+		});
+	}));
+	//resetRightMenuItems
+	rightMenuBandSVGItemPathList.update((rightMenuList => {
+		return rightMenuList.map(item => {
+				return {...item, isActive: false}
+		});
+	}));
+};
+
+export function handleRightMenuItemsClick(id) {
+	let foundMenuItem  = rightMenuBandSVGItemPathList.update((rightMenuList => {
+		return rightMenuList.map(item => {
+			if (item.id === id)
+				return {...item, isActive: true}
+			else
+				return {...item, isActive: false}
+		});
+	}));
+	//resetCenterMenuItems
+	centerMenuBandSVGItemPathList.update((centerMenuList => {
+		return centerMenuList.map(item => {
+				return {...item, isActive: false}
+		});
+	}));
+};

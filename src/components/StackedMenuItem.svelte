@@ -1,44 +1,10 @@
 <script>
-	import {centerMenuBandSVGItemPathList,rightMenuBandSVGItemPathList} from '../stores/menubandstore';
+	import {handleCenterMenuItemsClick, handleRightMenuItemsClick} from '../stores/menubandstore';
 	export let menuText = '';
 	export let svgElementPath = '';
 	// export let isDisabled = false;
 	export let isActive = false;
 	export let id = 0;
-
-	function handleCenterMenuItemsClick(id) {
-		let foundMenuItem  = centerMenuBandSVGItemPathList.update((centerMenuList => {
-			return centerMenuList.map(item => {
-				if (item.id === id)
-					return {...item, isActive: true}
-				else
-					return {...item, isActive: false}
-			});
-		}));
-		//resetRightMenuItems
-		rightMenuBandSVGItemPathList.update((rightMenuList => {
-			return rightMenuList.map(item => {
-					return {...item, isActive: false}
-			});
-		}));
-	};
-
-	function handleRightMenuItemsClick(id) {
-		let foundMenuItem  = rightMenuBandSVGItemPathList.update((rightMenuList => {
-			return rightMenuList.map(item => {
-				if (item.id === id)
-					return {...item, isActive: true}
-				else
-					return {...item, isActive: false}
-			});
-		}));
-		//resetCenterMenuItems
-		centerMenuBandSVGItemPathList.update((centerMenuList => {
-			return centerMenuList.map(item => {
-					return {...item, isActive: false}
-			});
-		}));
-	};
 </script>
 
 <!-- focus:bg-gradient-to-tr focus:from-blue-900  focus:to-indigo-500 
@@ -49,7 +15,7 @@
 
 <button
 	{id}
-	class="flex flex-col justify-center items-center  hover:bg-gray-700 space-y-3 w-20 py-2
+	class="flex flex-col justify-center items-center  hover:bg-gray-700 space-y-2 w-20 pt-2
     {isActive === true ? 'bg-gradient-to-tr from-blue-900  to-indigo-500': ''} "
 	on:click={() => {
 		if (id <= 8 ) {
