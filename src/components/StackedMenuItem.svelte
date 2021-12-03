@@ -1,14 +1,18 @@
 <script>
 	import { handleCenterMenuItemsClick, handleRightMenuItemsClick } from '../stores/menubandstore';
 
-	export let menuText = '';
-	export let svgPath = '';
-	// export let isDisabled = false;
-	export let isActive = false;
-	export let id = 0;
+	export let item = {};
 
-	// export let menuItemAttrs = {  };
-
+	// let id = 0;
+	// let svgPath = '';
+	// let menuText = '';
+	// let isActive = false;
+	
+	// id = item.id;
+	// svgPath = item.svgPath;
+	// menuText = item.menuText;
+	// isActive = item.isActive;
+	// alert(menuText);
 	// const { id, svgPath, menuText, isActive } = { ...menuItemAttrs };
 </script>
 
@@ -19,14 +23,14 @@
 -->
 
 <button
-	{id}
+	id={item.id}
 	class="flex flex-col justify-center items-center  hover:bg-gray-700 space-y-2 w-20 pt-2 rounded-t-md 
-    {isActive === true ? 'bg-gradient-to-bl from-indigo-500 to-blue-700': ''} "
+    {item.isActive === true ? 'bg-gradient-to-bl from-indigo-500 to-blue-700': ''} "
 	on:click={() => {
-		if (id > 0 && id <= 8 ) {
-			handleCenterMenuItemsClick(id);	
-		} else if(id > 8 && id <= 12){
-			handleRightMenuItemsClick(id);
+		if (item.id > 0 && item.id <= 8 ) {
+			handleCenterMenuItemsClick(item.id);	
+		} else if(item.id > 8 && item.id <= 12){
+			handleRightMenuItemsClick(item.id);
 		}
 	}}
 >
@@ -39,8 +43,8 @@
 		stroke-linecap="round"
 		stroke-linejoin="round"
 		stroke-width="2"
-		d={svgPath}
+		d={item.svgPath}
 	/></svg
 	>
-	<span class="text-white font-thin text-sm tracking-tight whitespace-nowrap">{menuText}</span>
+	<span class="text-white font-thin text-sm tracking-tight whitespace-nowrap">{item.menuText}</span>
 </button>

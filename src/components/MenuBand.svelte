@@ -15,30 +15,15 @@
 </script>
 
 <div class="w-full h-20 flex justify-between items-end  bg-gray-800 opacity-80">
-	<MenuItem
-		id={leftMmenuItem.id}
-		menuText={leftMmenuItem.menuText}
-		svgPath={leftMmenuItem.svgPath}
-		isActive={leftMmenuItem.isActive}
-	/>
+	<MenuItem item={leftMmenuItem} />
 	<div class="flex space-x-5">
-		{#each $centerMenuBandSVGItemPathList as svgItem}
-			<MenuItem
-				id={svgItem.id}
-				menuText={svgItem.menuText}
-				svgPath={svgItem.svgPath}
-				isActive={svgItem.isActive}
-			/>
+		{#each $centerMenuBandSVGItemPathList as item}
+			<MenuItem {item} />
 		{/each}
 	</div>
 	<div class="flex space-x-3">
-		{#each $rightMenuBandSVGItemPathList as svgItem}
-			<MenuItem
-				id={svgItem.id}
-				menuText={svgItem.menuText}
-				svgPath={svgItem.svgPath}
-				isActive={svgItem.isActive}
-			/>
+		{#each $rightMenuBandSVGItemPathList as item}
+			<MenuItem {item} />
 		{/each}
 	</div>
 </div>
