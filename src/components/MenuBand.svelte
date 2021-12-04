@@ -1,9 +1,6 @@
 <script>
 	import MenuItem from './stackedmenuitem.svelte';
-	import {
-		centerMenuBandSVGItemStore,
-		rightMenuBandSVGItemStore
-	} from '../stores/menubandstore';
+	import { centerMenuBandSVGItemStore, rightMenuBandSVGItemStore } from '../stores/menubandstore';
 
 	const leftMmenuItem = {
 		id: 0,
@@ -14,16 +11,14 @@
 	};
 </script>
 
-<div class="w-full h-20 flex justify-between items-end  bg-gray-800 opacity-80">
-	<MenuItem item={leftMmenuItem} />
-	<div class="flex space-x-5">
-		{#each $centerMenuBandSVGItemStore as item}
-			<MenuItem {item} />
-		{/each}
-	</div>
-	<div class="flex space-x-3">
-		{#each $rightMenuBandSVGItemStore as item}
-			<MenuItem {item} />
-		{/each}
-	</div>
+<MenuItem item={leftMmenuItem} />
+<div class="flex space-x-5">
+	{#each $centerMenuBandSVGItemStore as item}
+		<MenuItem {item} />
+	{/each}
+</div>
+<div class="flex space-x-3">
+	{#each $rightMenuBandSVGItemStore as item}
+		<MenuItem {item} />
+	{/each}
 </div>
