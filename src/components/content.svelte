@@ -3,7 +3,7 @@
 
 	$: newColor = `bg-${$colornameStore.color}-${$colornameStore.depth}`;
 	$: toggle3DView = $colornameStore.toggle3D;
-
+	//$: toggle3DView = $colornameStore.toggle3D; - You can directly use $colornameStore.toggle3D below in the html instead of a reactive property $: toggle3DView
 	let show = false;
 </script>
 
@@ -451,7 +451,7 @@
 			<!-- <div class="rounded-full h-36 w-36 border-2 border-black bg-gray-600 ">
             </div> -->
 			<div class="h-40 w-40 rounded-full border-2 border-black flex items-center justify-center">
-				<span class="h-24 w-24 rounded-full bg-gray-400/50" />
+				<span class="h-24 w-24 rounded-full {newColor}" />
 			</div>
 		</div>
 	</div>
