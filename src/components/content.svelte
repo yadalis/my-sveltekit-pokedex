@@ -1,8 +1,9 @@
 <script>
-	import { colornameStore, handleColor } from '../stores/colorselectionstore';
- 
+	import { colornameStore, handleColor, handle3DView } from '../stores/colorselectionstore';
+
 	$: newColor = `bg-${$colornameStore.color}-${$colornameStore.depth}`;
- 
+	$: toggle3DView = $colornameStore.toggle3D;
+
 	let show = false;
 </script>
 
@@ -85,7 +86,12 @@
 				</svg>
 				<span class="font-normal text-xs ">Mixed Reality</span>
 			</div>
-			<div class="flex items-center space-x-2 bg-red-1000 px-5 hover:bg-gray-200">
+			<div
+				class="flex items-center space-x-2 bg-red-1000 px-5 hover:bg-gray-200"
+				on:click={() => {
+					handle3DView();
+				}}
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-4 w-4"
@@ -142,21 +148,30 @@
 			</div>
 			<div
 				class="flex items-center space-x-2 bg-red-1000 px-5 border-l border-gray-300 hover:bg-gray-200"
-				
-				on:click="{() => {show = !show}}"
+				on:click={() => {
+					show = !show;
+				}}
 			>
-				<div class="font-normal text-xs"
-					>. . .</div>
+				<div class="font-normal text-xs">. . .</div>
 			</div>
 		</div>
-		<div class="absolute right-0 top-0 mt-9 transition-all ease-linear origin-top-right duration-500"
-			class:scale-0={!show}>
+		<div
+			class="absolute right-0 top-0 mt-9 transition-all ease-linear origin-top-right duration-500"
+			class:scale-0={!show}
+		>
 			<div
 				class=" flex flex-col p-0  bg-gray-200 w-56 border space-y-1 border-black text-sm font-thin py-3 text-blue-900"
 			>
-				<div class="flex justify-end pr-3" on:click="{() => {show = false}}">
-					<div class="flex bg-gray-300 text-black rounded-full w-6 h-6 items-center justify-center hover:bg-gray-500 hover:text-white transition-all duration-500">
-						<span class="text-xs scale-x-150" >X</span>
+				<div
+					class="flex justify-end pr-3"
+					on:click={() => {
+						show = false;
+					}}
+				>
+					<div
+						class="flex bg-gray-300 text-black rounded-full w-6 h-6 items-center justify-center hover:bg-gray-500 hover:text-white transition-all duration-500"
+					>
+						<span class="text-xs scale-x-150">X</span>
 					</div>
 				</div>
 				<div class="flex space-x-3 hover:bg-gray-300 p-1 pl-3">
@@ -278,7 +293,7 @@
 		</div>
 	</div>
 	<div class="flex bg-gray-500 h-full flex-col items-center justify-center">
-		<div class="{newColor} w-96 h-56 transition-all duration-500"></div>
+		<div class="{newColor} w-96 h-56 transition-all duration-500" class:skew-y-12={toggle3DView} />
 	</div>
 </div>
 
@@ -292,32 +307,142 @@
 			<span class="font-semibold text-sm">Default</span>
 		</div>
 		<div class="grid grid-cols-5 pl-3 mt-5 gap-y-3 ">
-			<div class="h-8 w-8 border border-black rounded-full bg-blue-300"    on:click="{() => {handleColor({color: 'blue', depth: 300})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-blue-400"    on:click="{() => {handleColor({color: 'blue', depth: 400})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-blue-500"    on:click="{() => {handleColor({color: 'blue', depth: 500})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-blue-600"    on:click="{() => {handleColor({color: 'blue', depth: 600})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-blue-700"    on:click="{() => {handleColor({color: 'blue', depth: 700})}}"/>
-  
-			<div class="h-8 w-8 border border-black rounded-full bg-red-700"     on:click="{() => {handleColor({color: 'red', depth: 700})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-red-600"     on:click="{() => {handleColor({color: 'red', depth: 600})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-red-500"     on:click="{() => {handleColor({color: 'red', depth: 500})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-red-400"     on:click="{() => {handleColor({color: 'red', depth: 400})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-red-300"     on:click="{() => {handleColor({color: 'red', depth: 300})}}"/>
-  
-			<div class="h-8 w-8 border border-black rounded-full bg-green-300"   on:click="{() => {handleColor({color: 'green', depth: 300})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-green-400"   on:click="{() => {handleColor({color: 'green', depth: 400})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-green-500"   on:click="{() => {handleColor({color: 'green', depth: 500})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-green-600"   on:click="{() => {handleColor({color: 'green', depth: 600})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-green-700"   on:click="{() => {handleColor({color: 'green', depth: 700})}}"/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-blue-300"
+				on:click={() => {
+					handleColor({ color: 'blue', depth: 300, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-blue-400"
+				on:click={() => {
+					handleColor({ color: 'blue', depth: 400, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-blue-500"
+				on:click={() => {
+					handleColor({ color: 'blue', depth: 500, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-blue-600"
+				on:click={() => {
+					handleColor({ color: 'blue', depth: 600, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-blue-700"
+				on:click={() => {
+					handleColor({ color: 'blue', depth: 700, toggle3D: toggle3DView });
+				}}
+			/>
 
-			<div class="h-8 w-8 border border-black rounded-full bg-yellow-700"  on:click="{() => {handleColor({color: 'yellow', depth: 700})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-yellow-600"  on:click="{() => {handleColor({color: 'yellow', depth: 600})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-yellow-500"  on:click="{() => {handleColor({color: 'yellow', depth: 500})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-yellow-400"  on:click="{() => {handleColor({color: 'yellow', depth: 400})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-yellow-300"  on:click="{() => {handleColor({color: 'yellow', depth: 300})}}"/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-red-700"
+				on:click={() => {
+					handleColor({ color: 'red', depth: 700, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-red-600"
+				on:click={() => {
+					handleColor({ color: 'red', depth: 600, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-red-500"
+				on:click={() => {
+					handleColor({ color: 'red', depth: 500, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-red-400"
+				on:click={() => {
+					handleColor({ color: 'red', depth: 400, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-red-300"
+				on:click={() => {
+					handleColor({ color: 'red', depth: 300, toggle3D: toggle3DView });
+				}}
+			/>
 
-			<div class="h-8 w-8 border border-black rounded-full bg-indigo-300"  on:click="{() => {handleColor({color: 'indigo', depth: 300})}}"/>
-			<div class="h-8 w-8 border border-black rounded-full bg-indigo-400"  on:click="{() => {handleColor({color: 'indigo', depth: 400})}}"/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-green-300"
+				on:click={() => {
+					handleColor({ color: 'green', depth: 300, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-green-400"
+				on:click={() => {
+					handleColor({ color: 'green', depth: 400, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-green-500"
+				on:click={() => {
+					handleColor({ color: 'green', depth: 500, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-green-600"
+				on:click={() => {
+					handleColor({ color: 'green', depth: 600, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-green-700"
+				on:click={() => {
+					handleColor({ color: 'green', depth: 700, toggle3D: toggle3DView });
+				}}
+			/>
+
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-yellow-700"
+				on:click={() => {
+					handleColor({ color: 'yellow', depth: 700, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-yellow-600"
+				on:click={() => {
+					handleColor({ color: 'yellow', depth: 600, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-yellow-500"
+				on:click={() => {
+					handleColor({ color: 'yellow', depth: 500, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-yellow-400"
+				on:click={() => {
+					handleColor({ color: 'yellow', depth: 400, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-yellow-300"
+				on:click={() => {
+					handleColor({ color: 'yellow', depth: 300, toggle3D: toggle3DView });
+				}}
+			/>
+
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-indigo-300"
+				on:click={() => {
+					handleColor({ color: 'indigo', depth: 300, toggle3D: toggle3DView });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-indigo-400"
+				on:click={() => {
+					handleColor({ color: 'indigo', depth: 400, toggle3D: toggle3DView });
+				}}
+			/>
 		</div>
 		<div class="flex space-x-3 mt-8">
 			<span class="font-thin text-sm">Light Wheel</span>
