@@ -278,7 +278,7 @@
 		</div>
 	</div>
 	<div class="flex bg-gray-500 h-full flex-col items-center justify-center">
-		<div class="{newColor} w-96 h-56"></div>
+		<div class="{newColor} w-96 h-56 transition-all duration-500"></div>
 	</div>
 </div>
 

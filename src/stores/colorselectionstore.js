@@ -8,13 +8,7 @@ export let colornameStore = writable(
 )
 
 export function handleColor(newColor) {
-	//alert(id);
 	colornameStore.update((currentColor) => {
-		console.log(currentColor);
-		currentColor  = newColor ;
-		console.log(currentColor);
-		return currentColor;
+		return currentColor  = newColor;
 	});
 }
-
-// export let colorname = 'pink';
