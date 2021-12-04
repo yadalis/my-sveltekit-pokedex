@@ -145,8 +145,8 @@
 					>. . .</div>
 			</div>
 		</div>
-		<div class="absolute right-0 top-0 mt-9"
-			class:hidden={!show}>
+		<div class="absolute right-0 top-0 mt-9 transition-all ease-linear origin-top-right duration-500"
+			class:scale-0={!show}>
 			<div
 				class=" flex flex-col p-0  bg-gray-200 w-56 border space-y-1 border-black text-sm font-thin py-3 text-blue-900"
 			>
