@@ -1,4 +1,5 @@
 <script>
+	let show = true;
 </script>
 
 <div class="flex flex-col w-5/6 bg-blue-300">
@@ -137,111 +138,138 @@
 			</div>
 			<div
 				class="flex items-center space-x-2 bg-red-1000 px-5 border-l border-gray-300 hover:bg-gray-200"
+				
+				on:click="{() => {show = !show}}"
 			>
-				<div class="font-normal text-xs  ">. . .</div>
+				<div class="font-normal text-xs"
+					>. . .</div>
 			</div>
 		</div>
-		<div
-			class="absolute flex flex-col p-0 right-0 top-0 mt-9 bg-gray-200 w-56 border space-y-1 border-black text-sm font-thin py-3 text-blue-900"
-		>
-			<div class="flex space-x-3 hover:bg-gray-300 p-1 pl-3">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 20 20"
-					class="h-4 w-4  "
-					stroke="currentColor"
-					><path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M6 18L18 6M6 6l12 12"
-					/></svg
-				>
-				<span>Undo</span>
-			</div>
-			<div class="flex space-x-3 hover:bg-gray-300 p-1  pl-3">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 20 20"
-					class="h-4 w-4  "
-					stroke="currentColor"
-					><path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
-					/></svg
-				>
-				<span>Redo</span>
-			</div>
-			<hr class="h-0.5 bg-gray-300" />
-			<div class="flex space-x-3 hover:bg-gray-300 p-1  pl-3">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 20 20"
-					class="h-4 w-4  "
-					stroke="currentColor"
-					><path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-					/></svg
-				>
-				<span>Paste</span>
-			</div>
-			<hr class="h-0.5 bg-gray-300" />
-			<div class="flex space-x-3 hover:bg-gray-300 p-1  pl-3">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 20 20"
-					class="h-4 w-4  "
-					stroke="currentColor"
-					><path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
-					/></svg
-				>
-				<span>Canvas options</span>
-			</div>
-			<hr class="h-0.5 bg-gray-300" />
-			<div class="flex space-x-3 hover:bg-gray-300 p-1  pl-3">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 20 20"
-					class="h-4 w-4  "
-					stroke="currentColor"
-					><path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"
-					/></svg
-				>
-				<span>Show interaction controls</span>
-			</div>
-			<div class="flex space-x-3 hover:bg-gray-300 p-1  pl-3">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 20 20"
-					class="h-4 w-4  "
-					stroke="currentColor"
-					><path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
-					/></svg
-				><span>Reset view</span>
-			</div>
-			<div class="flex space-x-3 items-center hover:bg-gray-300 p-1  pl-3">
-				<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-				  </svg>
-				<span>Take screenshot</span>
+		<div class="absolute right-0 top-0 mt-9"
+			class:hidden={!show}>
+			<div
+				class=" flex flex-col p-0  bg-gray-200 w-56 border space-y-1 border-black text-sm font-thin py-3 text-blue-900"
+			>
+				<div class="flex justify-end pr-3" on:click="{() => {show = false}}">
+					<div class="flex bg-gray-300 text-black rounded-full w-6 h-6 items-center justify-center hover:bg-gray-500 hover:text-white transition-all duration-500">
+						<span class="text-xs scale-x-150" >X</span>
+					</div>
+				</div>
+				<div class="flex space-x-3 hover:bg-gray-300 p-1 pl-3">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 20 20"
+						class="h-4 w-4  "
+						stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M6 18L18 6M6 6l12 12"
+						/></svg
+					>
+					<span>Undo</span>
+				</div>
+				<div class="flex space-x-3 hover:bg-gray-300 p-1  pl-3">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 20 20"
+						class="h-4 w-4  "
+						stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"
+						/></svg
+					>
+					<span>Redo</span>
+				</div>
+				<hr class="h-0.5 bg-gray-300" />
+				<div class="flex space-x-3 hover:bg-gray-300 p-1  pl-3">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 20 20"
+						class="h-4 w-4  "
+						stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+						/></svg
+					>
+					<span>Paste</span>
+				</div>
+				<hr class="h-0.5 bg-gray-300" />
+				<div class="flex space-x-3 hover:bg-gray-300 p-1  pl-3">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 20 20"
+						class="h-4 w-4  "
+						stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
+						/></svg
+					>
+					<span>Canvas options</span>
+				</div>
+				<hr class="h-0.5 bg-gray-300" />
+				<div class="flex space-x-3 hover:bg-gray-300 p-1  pl-3">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 20 20"
+						class="h-4 w-4  "
+						stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"
+						/></svg
+					>
+					<span>Show interaction controls</span>
+				</div>
+				<div class="flex space-x-3 hover:bg-gray-300 p-1  pl-3">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 20 20"
+						class="h-4 w-4  "
+						stroke="currentColor"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
+						/></svg
+					><span>Reset view</span>
+				</div>
+				<div class="flex space-x-3 items-center hover:bg-gray-300 p-1  pl-3">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-4 w-4"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+						/>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+						/>
+					</svg>
+					<span>Take screenshot</span>
+				</div>
 			</div>
 		</div>
 	</div>
