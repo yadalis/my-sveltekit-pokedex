@@ -1,5 +1,9 @@
 <script>
-	let show = true;
+	import { colornameStore, handleColor } from '../stores/colorselectionstore';
+ 
+	$: newColor = `bg-${$colornameStore.color}-${$colornameStore.depth}`;
+ 
+	let show = false;
 </script>
 
 <div class="flex flex-col w-5/6 bg-blue-300">
@@ -273,7 +277,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex bg-gray-500 h-full" />
+	<div class="flex bg-gray-500 h-full flex-col items-center justify-center">
+		<div class="{newColor} w-96 h-56"></div>
+	</div>
 </div>
 
 <div class="flex flex-col w-1/6 bg-gray-100 pl-5  ">
@@ -286,32 +292,32 @@
 			<span class="font-semibold text-sm">Default</span>
 		</div>
 		<div class="grid grid-cols-5 pl-3 mt-5 gap-y-3 ">
-			<div class="h-8 w-8 border border-black rounded-full bg-blue-300" />
-			<div class="h-8 w-8 border border-black rounded-full bg-blue-400" />
-			<div class="h-8 w-8 border border-black rounded-full bg-blue-500" />
-			<div class="h-8 w-8 border border-black rounded-full bg-blue-600" />
-			<div class="h-8 w-8 border border-black rounded-full bg-blue-700" />
+			<div class="h-8 w-8 border border-black rounded-full bg-blue-300"    on:click="{() => {handleColor({color: 'blue', depth: 300})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-blue-400"    on:click="{() => {handleColor({color: 'blue', depth: 400})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-blue-500"    on:click="{() => {handleColor({color: 'blue', depth: 500})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-blue-600"    on:click="{() => {handleColor({color: 'blue', depth: 600})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-blue-700"    on:click="{() => {handleColor({color: 'blue', depth: 700})}}"/>
+  
+			<div class="h-8 w-8 border border-black rounded-full bg-red-700"     on:click="{() => {handleColor({color: 'red', depth: 700})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-red-600"     on:click="{() => {handleColor({color: 'red', depth: 600})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-red-500"     on:click="{() => {handleColor({color: 'red', depth: 500})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-red-400"     on:click="{() => {handleColor({color: 'red', depth: 400})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-red-300"     on:click="{() => {handleColor({color: 'red', depth: 300})}}"/>
+  
+			<div class="h-8 w-8 border border-black rounded-full bg-green-300"   on:click="{() => {handleColor({color: 'green', depth: 300})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-green-400"   on:click="{() => {handleColor({color: 'green', depth: 400})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-green-500"   on:click="{() => {handleColor({color: 'green', depth: 500})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-green-600"   on:click="{() => {handleColor({color: 'green', depth: 600})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-green-700"   on:click="{() => {handleColor({color: 'green', depth: 700})}}"/>
 
-			<div class="h-8 w-8 border border-black rounded-full bg-red-700" />
-			<div class="h-8 w-8 border border-black rounded-full bg-red-600" />
-			<div class="h-8 w-8 border border-black rounded-full bg-red-500" />
-			<div class="h-8 w-8 border border-black rounded-full bg-red-400" />
-			<div class="h-8 w-8 border border-black rounded-full bg-red-300" />
+			<div class="h-8 w-8 border border-black rounded-full bg-yellow-700"  on:click="{() => {handleColor({color: 'yellow', depth: 700})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-yellow-600"  on:click="{() => {handleColor({color: 'yellow', depth: 600})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-yellow-500"  on:click="{() => {handleColor({color: 'yellow', depth: 500})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-yellow-400"  on:click="{() => {handleColor({color: 'yellow', depth: 400})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-yellow-300"  on:click="{() => {handleColor({color: 'yellow', depth: 300})}}"/>
 
-			<div class="h-8 w-8 border border-black rounded-full bg-green-300" />
-			<div class="h-8 w-8 border border-black rounded-full bg-green-400" />
-			<div class="h-8 w-8 border border-black rounded-full bg-green-500" />
-			<div class="h-8 w-8 border border-black rounded-full bg-green-600" />
-			<div class="h-8 w-8 border border-black rounded-full bg-green-700" />
-
-			<div class="h-8 w-8 border border-black rounded-full bg-yellow-700" />
-			<div class="h-8 w-8 border border-black rounded-full bg-yellow-600" />
-			<div class="h-8 w-8 border border-black rounded-full bg-yellow-500" />
-			<div class="h-8 w-8 border border-black rounded-full bg-yellow-400" />
-			<div class="h-8 w-8 border border-black rounded-full bg-yellow-300" />
-
-			<div class="h-8 w-8 border border-black rounded-full bg-indigo-300" />
-			<div class="h-8 w-8 border border-black rounded-full bg-indigo-400" />
+			<div class="h-8 w-8 border border-black rounded-full bg-indigo-300"  on:click="{() => {handleColor({color: 'indigo', depth: 300})}}"/>
+			<div class="h-8 w-8 border border-black rounded-full bg-indigo-400"  on:click="{() => {handleColor({color: 'indigo', depth: 400})}}"/>
 		</div>
 		<div class="flex space-x-3 mt-8">
 			<span class="font-thin text-sm">Light Wheel</span>
