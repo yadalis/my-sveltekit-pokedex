@@ -1,5 +1,6 @@
 <script>
 	import { colornameStore, handleColor, handle3DView } from '../stores/colorselectionstore';
+	import {clickOutside} from '../scripts/clickOutside.js';
 
 	$: newBGColor = `bg-${$colornameStore.color}-${$colornameStore.depth}`;
 	$: newTextColor = `text-${$colornameStore.color}-${$colornameStore.depth}`;
@@ -8,6 +9,13 @@
 
 	//$: toggle3DView = $colornameStore.toggle3D; - You can directly use $colornameStore.toggle3D below in the html instead of a reactive property $: toggle3DView
 	let show = false;
+
+	function handleClickOutside(event) {
+		if (show === true) {
+			show = false
+		}
+	}
+
 </script>
 
 <div class="flex flex-col w-5/6 bg-blue-300">
@@ -164,10 +172,11 @@
 		>
 			<div
 				class=" flex flex-col p-0  bg-gray-200 w-56 border space-y-1 border-black text-sm font-thin py-3 text-blue-900"
+				use:clickOutside on:click_outside={handleClickOutside}			
 			>
 				<div
 					class="flex justify-end pr-3"
-					
+							
 				>
 					<div
 						class="flex bg-gray-300 text-black rounded-full w-6 h-6 items-center justify-center hover:bg-gray-500 hover:text-white transition-all duration-500"
