@@ -1,8 +1,11 @@
 <script>
 	import { colornameStore, handleColor, handle3DView } from '../stores/colorselectionstore';
 
-	$: newColor = `bg-${$colornameStore.color}-${$colornameStore.depth}`;
+	$: newBGColor = `bg-${$colornameStore.color}-${$colornameStore.depth}`;
+	$: newTextColor = `text-${$colornameStore.color}-${$colornameStore.depth}`;
 	$: toggle3DView = $colornameStore.toggle3D;
+	$: localColorStateObject = $colornameStore;
+
 	//$: toggle3DView = $colornameStore.toggle3D; - You can directly use $colornameStore.toggle3D below in the html instead of a reactive property $: toggle3DView
 	let show = false;
 </script>
@@ -149,7 +152,7 @@
 			<div
 				class="flex items-center space-x-2 bg-red-1000 px-5 border-l border-gray-300 hover:bg-gray-200"
 				on:click={() => {
-					show = !show;
+					show = true;
 				}}
 			>
 				<div class="font-normal text-xs">. . .</div>
@@ -164,12 +167,13 @@
 			>
 				<div
 					class="flex justify-end pr-3"
-					on:click={() => {
-						show = false;
-					}}
+					
 				>
 					<div
 						class="flex bg-gray-300 text-black rounded-full w-6 h-6 items-center justify-center hover:bg-gray-500 hover:text-white transition-all duration-500"
+						on:click={() => {
+							show = false;
+						}}
 					>
 						<span class="text-xs scale-x-150">X</span>
 					</div>
@@ -293,165 +297,168 @@
 		</div>
 	</div>
 	<div class="flex bg-gray-500 h-full flex-col items-center justify-center">
-		<div class="{newColor} w-96 h-56 transition-all duration-500" class:skew-y-12={toggle3DView} />
+		<div
+			class="{newBGColor} w-96 h-56 transition-all duration-500"
+			class:skew-y-12={toggle3DView}
+		/>
 	</div>
 </div>
 
 <div class="flex flex-col w-1/6 bg-gray-100 pl-5  ">
 	<div class="flex h-10 items-center ">
-		<span class="text-blue-500 font-medium">Effects</span>
+		<span class="font-medium">Effects</span>
 	</div>
 	<div class="flex bg-gray-8000 h-full flex-col ">
 		<div class="flex space-x-3">
 			<span class="font-thin text-sm">Filter:</span>
-			<span class="font-semibold text-sm">Default</span>
+			<span class="font-semibold text-sm {newTextColor}">Default</span>
 		</div>
 		<div class="grid grid-cols-5 pl-3 mt-5 gap-y-3 ">
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-blue-300"
+				class="h-8 w-8 border border-black rounded-full bg-blue-300 text-blue-300"
 				on:click={() => {
-					handleColor({ color: 'blue', depth: 300, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'blue', depth: 300 });
 				}}
 			/>
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-blue-400"
+				class="h-8 w-8 border border-black rounded-full bg-blue-400 text-blue-400"
 				on:click={() => {
-					handleColor({ color: 'blue', depth: 400, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'blue', depth: 400 });
 				}}
 			/>
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-blue-500"
+				class="h-8 w-8 border border-black rounded-full bg-blue-500 text-blue-500"
 				on:click={() => {
-					handleColor({ color: 'blue', depth: 500, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'blue', depth: 500 });
 				}}
 			/>
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-blue-600"
+				class="h-8 w-8 border border-black rounded-full bg-blue-600 text-blue-600"
 				on:click={() => {
-					handleColor({ color: 'blue', depth: 600, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'blue', depth: 600 });
 				}}
 			/>
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-blue-700"
+				class="h-8 w-8 border border-black rounded-full bg-blue-700 text-blue-700"
 				on:click={() => {
-					handleColor({ color: 'blue', depth: 700, toggle3D: toggle3DView });
-				}}
-			/>
-
-			<div
-				class="h-8 w-8 border border-black rounded-full bg-red-700"
-				on:click={() => {
-					handleColor({ color: 'red', depth: 700, toggle3D: toggle3DView });
-				}}
-			/>
-			<div
-				class="h-8 w-8 border border-black rounded-full bg-red-600"
-				on:click={() => {
-					handleColor({ color: 'red', depth: 600, toggle3D: toggle3DView });
-				}}
-			/>
-			<div
-				class="h-8 w-8 border border-black rounded-full bg-red-500"
-				on:click={() => {
-					handleColor({ color: 'red', depth: 500, toggle3D: toggle3DView });
-				}}
-			/>
-			<div
-				class="h-8 w-8 border border-black rounded-full bg-red-400"
-				on:click={() => {
-					handleColor({ color: 'red', depth: 400, toggle3D: toggle3DView });
-				}}
-			/>
-			<div
-				class="h-8 w-8 border border-black rounded-full bg-red-300"
-				on:click={() => {
-					handleColor({ color: 'red', depth: 300, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'blue', depth: 700 });
 				}}
 			/>
 
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-green-300"
+				class="h-8 w-8 border border-black rounded-full bg-red-700 text-red-700"
 				on:click={() => {
-					handleColor({ color: 'green', depth: 300, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'red', depth: 700 });
 				}}
 			/>
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-green-400"
+				class="h-8 w-8 border border-black rounded-full bg-red-600 text-red-600"
 				on:click={() => {
-					handleColor({ color: 'green', depth: 400, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'red', depth: 600 });
 				}}
 			/>
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-green-500"
+				class="h-8 w-8 border border-black rounded-full bg-red-500 text-red-500"
 				on:click={() => {
-					handleColor({ color: 'green', depth: 500, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'red', depth: 500 });
 				}}
 			/>
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-green-600"
+				class="h-8 w-8 border border-black rounded-full bg-red-400 text-red-400"
 				on:click={() => {
-					handleColor({ color: 'green', depth: 600, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'red', depth: 400 });
 				}}
 			/>
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-green-700"
+				class="h-8 w-8 border border-black rounded-full bg-red-300 text-red-300"
 				on:click={() => {
-					handleColor({ color: 'green', depth: 700, toggle3D: toggle3DView });
-				}}
-			/>
-
-			<div
-				class="h-8 w-8 border border-black rounded-full bg-yellow-700"
-				on:click={() => {
-					handleColor({ color: 'yellow', depth: 700, toggle3D: toggle3DView });
-				}}
-			/>
-			<div
-				class="h-8 w-8 border border-black rounded-full bg-yellow-600"
-				on:click={() => {
-					handleColor({ color: 'yellow', depth: 600, toggle3D: toggle3DView });
-				}}
-			/>
-			<div
-				class="h-8 w-8 border border-black rounded-full bg-yellow-500"
-				on:click={() => {
-					handleColor({ color: 'yellow', depth: 500, toggle3D: toggle3DView });
-				}}
-			/>
-			<div
-				class="h-8 w-8 border border-black rounded-full bg-yellow-400"
-				on:click={() => {
-					handleColor({ color: 'yellow', depth: 400, toggle3D: toggle3DView });
-				}}
-			/>
-			<div
-				class="h-8 w-8 border border-black rounded-full bg-yellow-300"
-				on:click={() => {
-					handleColor({ color: 'yellow', depth: 300, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'red', depth: 300 });
 				}}
 			/>
 
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-indigo-300"
+				class="h-8 w-8 border border-black rounded-full bg-green-300 text-green-300"
 				on:click={() => {
-					handleColor({ color: 'indigo', depth: 300, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'green', depth: 300 });
 				}}
 			/>
 			<div
-				class="h-8 w-8 border border-black rounded-full bg-indigo-400"
+				class="h-8 w-8 border border-black rounded-full bg-green-400 text-green-400"
 				on:click={() => {
-					handleColor({ color: 'indigo', depth: 400, toggle3D: toggle3DView });
+					handleColor({ ...localColorStateObject, color: 'green', depth: 400 });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-green-500 text-green-500"
+				on:click={() => {
+					handleColor({ ...localColorStateObject, color: 'green', depth: 500 });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-green-600 text-green-600"
+				on:click={() => {
+					handleColor({ ...localColorStateObject, color: 'green', depth: 600 });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-green-700 text-green-700"
+				on:click={() => {
+					handleColor({ ...localColorStateObject, color: 'green', depth: 700 });
+				}}
+			/>
+
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-yellow-700 text-yellow-700"
+				on:click={() => {
+					handleColor({ ...localColorStateObject, color: 'yellow', depth: 700 });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-yellow-600 text-yellow-600"
+				on:click={() => {
+					handleColor({ ...localColorStateObject, color: 'yellow', depth: 600 });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-yellow-500 text-yellow-500"
+				on:click={() => {
+					handleColor({ ...localColorStateObject, color: 'yellow', depth: 500 });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-yellow-400 text-yellow-400"
+				on:click={() => {
+					handleColor({ ...localColorStateObject, color: 'yellow', depth: 400 });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-yellow-300 text-yellow-300"
+				on:click={() => {
+					handleColor({ ...localColorStateObject, color: 'yellow', depth: 300 });
+				}}
+			/>
+
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-indigo-300 text-indigo-300"
+				on:click={() => {
+					handleColor({ ...localColorStateObject, color: 'indigo', depth: 300 });
+				}}
+			/>
+			<div
+				class="h-8 w-8 border border-black rounded-full bg-indigo-400 text-indigo-400"
+				on:click={() => {
+					handleColor({ ...localColorStateObject, color: 'indigo', depth: 400 });
 				}}
 			/>
 		</div>
 		<div class="flex space-x-3 mt-8">
-			<span class="font-thin text-sm">Light Wheel</span>
+			<span class="font-thin text-sm {newTextColor}">Light Wheel</span>
 		</div>
 		<div class="flex items-center justify-center mt-8">
 			<!-- <div class="rounded-full h-36 w-36 border-2 border-black bg-gray-600 ">
             </div> -->
 			<div class="h-40 w-40 rounded-full border-2 border-black flex items-center justify-center">
-				<span class="h-24 w-24 rounded-full {newColor}" />
+				<span class="h-24 w-24 rounded-full {newBGColor}" />
 			</div>
 		</div>
 	</div>
