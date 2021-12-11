@@ -12,16 +12,21 @@
   	class:bg-gradient-to-tr={isActive}
     class:from-blue-900={isActive}
     class:to-indigo-500={isActive}
-
+	{isActive === true ? 'bg-gradient-to-bl from-blue-500 to-indigo-600' : ''} "
 	class:bg-gradient-to-tr={item.isActive}
     class:from-blue-900={item.isActive}
     class:to-indigo-500={item.isActive}
 -->
 
+<div class="from-indigo-600 to-blue-400 from-red-600 to-yellow-400 from-red-700 to-red-300 hidden">
+	
+</div>
+
 <button
 	{id}
-	class="flex flex-col justify-center items-center  hover:bg-gray-700 space-y-2 w-20 pt-2 rounded-t-sm
-    {isActive === true ? 'bg-gradient-to-bl from-indigo-500 to-red-700' : ''} "
+	class="flex flex-col justify-center items-center  hover:bg-gray-700 space-y-2 w-20 pt-2 rounded-t-sm 
+	{isActive === true ? 'bg-gradient-to-bl from-red-600 to-red-300' : ''} "
+ 
 	on:click={() => {
 		if (id > 0 && id <= 8) {
 			handleCenterMenuItemsClick(id);

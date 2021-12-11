@@ -1,16 +1,160 @@
 <script>
-	import MenuBand from "../components/menuband.svelte";
-	import Content from "../components/content.svelte";
+	import OrgsListView from '../components/orgsListView.svelte';
+	import OldNewChangesView from '../components/oldNewChangesView.svelte';
+	import FullDataSet from '../components/fullDataSet.svelte';
+	import { selectedOrgDataStore } from '../stores/orgStore';
+	import deepCloneMe from 'lodash/cloneDeep';
+	import { onMount } from 'svelte';
+
+	let viewModel = deepCloneMe($selectedOrgDataStore);
+	let oldViewModel = deepCloneMe($selectedOrgDataStore);
+	$: isParentSelected = viewModel.childOrgs.length > 0;
+	let isInEditMode = false;
+	$: orgName = viewModel.orgName;
+	$: orgFieldValues = viewModel.fieldValues;
+
+	$: showPopup = false;
+
+	$: isDirty =
+		oldViewModel.fieldValues[0].value.toString() !== viewModel.fieldValues[0].value.toString() ||
+		oldViewModel.fieldValues[1].value.toString() !== viewModel.fieldValues[1].value.toString() ||
+		oldViewModel.fieldValues[2].value.toString() !== viewModel.fieldValues[2].value.toString();
+
+	selectedOrgDataStore.subscribe((newOrg) => {
+		// console.log('============================================================================');
+		// console.log('oldViewModel City' + oldViewModel.fieldValues[1].value);
+		// console.log('oldViewModel  Inv Terms' + oldViewModel.fieldValues[2].value);
+		// console.log('View Model City' + viewModel.fieldValues[1].value);
+		// console.log('View Model Inv Terms' + viewModel.fieldValues[2].value);
+		//setDirtyFlag();
+		if (newOrg) {
+			if (isDirty === false) {
+				viewModel = deepCloneMe(newOrg);
+				oldViewModel = deepCloneMe(newOrg);
+			} else {
+				console.log('lose changes ?');
+			}
+		}
+	});
 </script>
+
 <svelte:head><title>Paint 3D - full app work!</title></svelte:head>
 
-<!-- Paint-3D Window Container  -->
-<div class="min-h-screen h-screen flex flex-col items-center bg-red-100   ">
+<div class="min-h-screen h-screen flex flex-col p-5">
+	<div class="flex flex-col items-center ">
+		<div class="absolute flex flex-col h-96 w-96 bg-red-100  "
+			class:hidden={!showPopup}>
 
-	<!-- Menu Band -->
-	<div class="w-full h-20 flex justify-between items-end  bg-gray-800 opacity-80"><MenuBand/></div>
+		</div>
+	</div>
+	<!-- Top section -->
+	<div class="flex justify-between space-x-5 flex-auto">
+		<!-- left panel -->
+		<div class="p-0 bg-gray-100 flex flex-shrink-0  flex-none ">
+			<!-- Org list section -->
+			<OrgsListView {isDirty} {showPopup}/>
+			<!-- data editing section -->
+			<div class="flex flex-col bg-gray-100  flex-none ">
+				<!-- Org Name Heading -->
+				<div
+					class="text-center text-blue-4000 py-1 text-lg"
+					class:font-bold={isParentSelected}
+					class:italic={!isParentSelected}
+					on:click={() => {
+						//showStuff();
+					}}
+				>
+					<!-- {orgName} - {$selectedOrgDataStore.fieldValues[1].value} - {$selectedOrgDataStore.fieldValues[2].value} -->
+					{orgName} - {viewModel.fieldValues[1].value} - {viewModel.fieldValues[2].value}
+				</div>
+				<hr />
+				<!-- Edit button -->
+				<div class="flex justify-end mt-12">
+					<button
+						class="bg-red-200 flex items-center justify-center h-8 w-16 focus:bg-red-300 ring-1 ring-red-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
+						disabled={isInEditMode}
+						on:click={() => {
+							isInEditMode = true;
+						}}
+					>
+						Edit
+					</button>
+				</div>
+				<hr />
+				<!-- Data Fields Generation block -->
+				<div class="m-3 flex flex-col">
+					<div class="grid grid-cols-2 gap-3 my-3">
+						{#if isInEditMode === false}
+							<!-- In Display mode -->
+							{#each orgFieldValues as fieldValue}
+								<div class="text-indigo-5000 place-self-end items-center flex">
+									{fieldValue.name}:
+								</div>
+								<div class="text-red-500">{fieldValue.value}</div>
+							{/each}
+						{:else}
+							<!-- In Edit mode -->
+							{#each orgFieldValues as fieldValue}
+								<div class="flex text-indigo-5000 place-self-end  items-center h-8">
+									{fieldValue.name}:
+								</div>
+								<div>
+									<input
+										type=""
+										name=""
+										id=""
+										bind:value={fieldValue.value}
+										on:input={() => {
+											//isDirty = true;
+											//setDirtyFlag();
+										}}
+										class="rounded-lg px-1 h-8 bg-gray-200 outline-none focus:border-b-2 focus:border-indigo-400"
+									/>
+								</div>
+							{/each}
+						{/if}
+					</div>
+				</div>
+				<hr />
+				<!-- Cancel/Save buttons -->
+				{#if isInEditMode}
+					<div class="flex justify-end mt-12">
+						<button
+							class=" bg-red-200 flex items-center justify-center h-8 w-16 focus:bg-red-300 ring-1 ring-red-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
+							class:hidden={isDirty}
+							on:click={() => {
+								isInEditMode = false;
+							}}
+						>
+							Exit
+						</button>
 
-	<!-- Sub-Menu/Content & Context based content band-->
-	<div class="w-full flex justify-between bg-red-700 flex-auto"><Content/></div>
+						<button
+							class="bg-red-200 flex items-center justify-center h-8 w-32 focus:bg-red-300 ring-1 ring-red-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
+							class:hidden={!isDirty}
+							on:click={() => {
+								isInEditMode = false;
+								viewModel = deepCloneMe(oldViewModel);
+							}}
+						>
+							Cancel Changes
+						</button>
 
+						<button
+							class="bg-green-200 flex items-center justify-center h-8 w-16 focus:bg-green-300 ring-1 ring-green-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
+							on:click={() => {}}
+						>
+							Save
+						</button>
+					</div>
+				{/if}
+			</div>
+		</div>
+
+		<!-- right panel -->
+		<div class="flex-auto"><OldNewChangesView {viewModel} /></div>
+	</div>
+
+	<!-- Bottom table - Full data -->
+	<FullDataSet />
 </div>
