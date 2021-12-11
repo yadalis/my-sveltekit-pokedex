@@ -2,7 +2,7 @@
 	import OrgsListView from '../components/orgsListView.svelte';
 	import OldNewChangesView from '../components/oldNewChangesView.svelte';
 	import FullDataSet from '../components/fullDataSet.svelte';
-	import { selectedOrgDataStore } from '../stores/orgStore';
+	import { selectedOrgDataStore, cancelCurrentChanges } from '../stores/orgStore';
 	import deepCloneMe from 'lodash/cloneDeep';
 	import { onMount } from 'svelte';
 
@@ -12,27 +12,28 @@
 	let isInEditMode = false;
 	$: orgName = viewModel.orgName;
 	$: orgFieldValues = viewModel.fieldValues;
-
-	$: showPopup = false;
-
 	$: isDirty =
 		oldViewModel.fieldValues[0].value.toString() !== viewModel.fieldValues[0].value.toString() ||
 		oldViewModel.fieldValues[1].value.toString() !== viewModel.fieldValues[1].value.toString() ||
 		oldViewModel.fieldValues[2].value.toString() !== viewModel.fieldValues[2].value.toString();
 
 	selectedOrgDataStore.subscribe((newOrg) => {
-		// console.log('============================================================================');
-		// console.log('oldViewModel City' + oldViewModel.fieldValues[1].value);
-		// console.log('oldViewModel  Inv Terms' + oldViewModel.fieldValues[2].value);
-		// console.log('View Model City' + viewModel.fieldValues[1].value);
-		// console.log('View Model Inv Terms' + viewModel.fieldValues[2].value);
-		//setDirtyFlag();
-		if (newOrg) {
-			if (isDirty === false) {
-				viewModel = deepCloneMe(newOrg);
-				oldViewModel = deepCloneMe(newOrg);
-			} else {
-				console.log('lose changes ?');
+		viewModel = deepCloneMe(newOrg);
+		oldViewModel = deepCloneMe(newOrg);
+		//You dont need the below code since the popup modal dialog is handling to check if there are changes and the data is dirty
+		// if (newOrg) {
+		// 	if (isDirty === false) {
+		// 		viewModel = deepCloneMe(newOrg);
+		// 		oldViewModel = deepCloneMe(newOrg);
+		// 	}
+		// }
+	});
+
+	cancelCurrentChanges.subscribe((shouldCancel) => {
+		if (shouldCancel) {
+			if (shouldCancel === true) {
+				isInEditMode = false;
+				viewModel = deepCloneMe(oldViewModel);
 			}
 		}
 	});
@@ -40,19 +41,13 @@
 
 <svelte:head><title>Paint 3D - full app work!</title></svelte:head>
 
-<div class="min-h-screen h-screen flex flex-col p-5">
-	<div class="flex flex-col items-center ">
-		<div class="absolute flex flex-col h-96 w-96 bg-red-100  "
-			class:hidden={!showPopup}>
-
-		</div>
-	</div>
+<div class="relative min-h-screen h-screen flex flex-col p-5">
 	<!-- Top section -->
 	<div class="flex justify-between space-x-5 flex-auto">
 		<!-- left panel -->
 		<div class="p-0 bg-gray-100 flex flex-shrink-0  flex-none ">
 			<!-- Org list section -->
-			<OrgsListView {isDirty} {showPopup}/>
+			<OrgsListView {isDirty} />
 			<!-- data editing section -->
 			<div class="flex flex-col bg-gray-100  flex-none ">
 				<!-- Org Name Heading -->
@@ -60,11 +55,7 @@
 					class="text-center text-blue-4000 py-1 text-lg"
 					class:font-bold={isParentSelected}
 					class:italic={!isParentSelected}
-					on:click={() => {
-						//showStuff();
-					}}
 				>
-					<!-- {orgName} - {$selectedOrgDataStore.fieldValues[1].value} - {$selectedOrgDataStore.fieldValues[2].value} -->
 					{orgName} - {viewModel.fieldValues[1].value} - {viewModel.fieldValues[2].value}
 				</div>
 				<hr />
@@ -104,10 +95,6 @@
 										name=""
 										id=""
 										bind:value={fieldValue.value}
-										on:input={() => {
-											//isDirty = true;
-											//setDirtyFlag();
-										}}
 										class="rounded-lg px-1 h-8 bg-gray-200 outline-none focus:border-b-2 focus:border-indigo-400"
 									/>
 								</div>

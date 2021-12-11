@@ -1,10 +1,41 @@
 <script>
-	import { orgData, getChildOrgFieldsData, getParentOrgFieldsData } from '../stores/orgStore';
+	import { orgData, getChildOrgFieldsData, getParentOrgFieldsData,cancelCurrentChanges } from '../stores/orgStore';
 	export let isDirty;
-	export let showPopup;
+	let showPopup = false;
 </script>
 
 <div class="flex flex-col border-0 bg-gray-300/80 p-3 overflow-hidden">
+	<div
+		class="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50"
+		class:hidden={!showPopup}
+	>
+		<div class="bg-gray-200 w-96 h-52 p-10 text-lg rounded-lg  ">
+			You have unsaved changes, changing Org will undo your current changes, do you want to proceed ?
+			<hr class="h-0.5 bg-black mt-1"/>
+			<div class="flex justify-end">
+				<button
+					class="bg-red-200 items-center justify-center h-8 w-16 focus:bg-red-300 ring-1 ring-red-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
+					on:click={() => {
+						showPopup = false;
+						$cancelCurrentChanges = true;
+					}}
+				>
+					Yes
+				</button>
+	
+				<button
+					class=" bg-green-200 items-center justify-center h-8 w-16 focus:bg-red-300 ring-1 ring-green-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
+					on:click={() => {
+						showPopup = false;
+						$cancelCurrentChanges = false;
+					}}
+				>
+					No
+				</button>
+			</div>
+		</div>
+	</div>
+
 	<div class="bg-gray-400/50 px-3 py-1">
 		<div class="font-bold">Org Name(s)</div>
 	</div>

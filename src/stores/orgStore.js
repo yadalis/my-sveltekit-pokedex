@@ -7,6 +7,8 @@ export const fieldData = writable([
 	{ id: 3, fieldName: 'invoiceTerms' }
 ]);
 
+export let cancelCurrentChanges = writable(false);
+
 export let selectedOrgDataStore = writable();
 
 let localData = [
