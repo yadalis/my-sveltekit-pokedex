@@ -29,14 +29,23 @@
 		// }
 	});
 
-	cancelCurrentChanges.subscribe((shouldCancel) => {
-		if (shouldCancel) {
-			if (shouldCancel === true) {
-				isInEditMode = false;
-				viewModel = deepCloneMe(oldViewModel);
-			}
+	$: {
+		if ($cancelCurrentChanges === true) {
+			isInEditMode = false;
+			viewModel = deepCloneMe(oldViewModel);
+			$cancelCurrentChanges = false;
+			console.log('asdfasdf');
 		}
-	});
+	}
+	//This style works too...
+	// cancelCurrentChanges.subscribe((shouldCancel) => {
+	// 	if (shouldCancel) {
+	// 		if (shouldCancel === true) {
+	// 			isInEditMode = false;
+	// 			viewModel = deepCloneMe(oldViewModel);
+	// 		}
+	// 	}
+	// });
 </script>
 
 <svelte:head><title>Paint 3D - full app work!</title></svelte:head>
