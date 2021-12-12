@@ -58,14 +58,14 @@
 			<!-- Org list section -->
 			<OrgsListView {isDirty} />
 			<!-- data editing section -->
-			<div class="flex flex-col bg-gray-100  flex-none ">
+			<div class="flex flex-col bg-gray-100  flex-none w-[400px] ">
 				<!-- Org Name Heading -->
 				<div
 					class="text-center text-blue-4000 py-1 text-lg"
 					class:font-bold={isParentSelected}
 					class:italic={!isParentSelected}
 				>
-					{orgName} - {viewModel.fieldValues[1].value} - {viewModel.fieldValues[2].value}
+					{orgName}
 				</div>
 				<hr />
 				<!-- Edit button -->
@@ -82,20 +82,20 @@
 				</div>
 				<hr />
 				<!-- Data Fields Generation block -->
-				<div class="m-3 flex flex-col">
-					<div class="grid grid-cols-2 gap-3 my-3">
+				<div class="m-1 flex justify-center flex-col">
+					<div class="grid grid-cols-2 gap-y-3 bg-gray-3000 ">
 						{#if isInEditMode === false}
 							<!-- In Display mode -->
 							{#each orgFieldValues as fieldValue}
-								<div class="text-indigo-5000 place-self-end items-center flex">
+								<div class="flex text-indigo-5000 justify-end w-28 items-center h-8 bg-gray-1000">
 									{fieldValue.name}:
 								</div>
-								<div class="text-red-500">{fieldValue.value}</div>
+								<div class="-ml-12 flex items-center rounded-lg px-1 h-8 font-semibold outline-none focus:border-b-2 focus:border-indigo-400">{fieldValue.value}</div>
 							{/each}
 						{:else}
 							<!-- In Edit mode -->
 							{#each orgFieldValues as fieldValue}
-								<div class="flex text-indigo-5000 place-self-end  items-center h-8">
+								<div class="flex text-indigo-5000 justify-end w-28 items-center h-8 bg-gray-1000">
 									{fieldValue.name}:
 								</div>
 								<div>
@@ -104,7 +104,7 @@
 										name=""
 										id=""
 										bind:value={fieldValue.value}
-										class="rounded-lg px-1 h-8 bg-gray-200 outline-none focus:border-b-2 focus:border-indigo-400"
+										class="-ml-8 rounded-lg px-1 h-8 bg-gray-200 outline-none focus:border-b-2 focus:border-indigo-400"
 									/>
 								</div>
 							{/each}
