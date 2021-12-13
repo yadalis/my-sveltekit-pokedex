@@ -70,65 +70,6 @@ let localData = [
 export let orgData = writable();
 orgData.set(localData);
 
-// export function getParentOrgFieldsData(orgID) {
-// 	selectedOrgDataStore.update((selectedOrg) => {
-// 		return localData.find((org) => {
-// 			if (org.orgID === orgID) {
-// 				return org;
-// 			}
-// 		});
-// 	});
-
-// 	orgData.update((orgsData) => {
-// 		return orgsData.map((org) => {
-// 			return {
-// 				...org,
-// 				isSelected: true,
-// 				childOrgs: org.childOrgs.map((childOrg) => {
-// 					return { ...childOrg, isSelected: false };
-// 					// if (childOrg.orgID === orgID) {
-// 					// 	return { ...childOrg, isSelected: true };
-// 					// } else {
-// 					// 	return { ...childOrg, isSelected: false };
-// 					// }
-// 				})
-// 			};
-// 		});
-// 	});
-// }
-
-// export function getChildOrgFieldsData(orgID) {
-// 	let parentOrg = localData.find((org) => {
-// 		if (org.orgID === 100) {
-// 			return org;
-// 		}
-// 	});
-
-// 	selectedOrgDataStore.update((selectedOrg) => {
-// 		return (selectedOrg = parentOrg.childOrgs.find((org) => {
-// 			if (org.orgID === orgID) {
-// 				return org;
-// 			}
-// 		}));
-// 	});
-
-// 	orgData.update((orgsData) => {
-// 		return orgsData.map((org) => {
-// 			return {
-// 				...org,
-// 				isSelected: false,
-// 				childOrgs: org.childOrgs.map((childOrg) => {
-// 					if (childOrg.orgID === orgID) {
-// 						return { ...childOrg, isSelected: true };
-// 					} else {
-// 						return { ...childOrg, isSelected: false };
-// 					}
-// 				})
-// 			};
-// 		});
-// 	});
-// }
-
 function findOrgById(orgID) {
 	let parentOrg = localData.find((parentOrgItem) => {
 		if (parentOrgItem.orgID === orgID) {
@@ -141,7 +82,7 @@ function findOrgById(orgID) {
 	if (parentOrg) {
 		return parentOrg;
 	} else {
-		parentOrg = localData.find((parentOrgItem) => {
+		localData.find((parentOrgItem) => {
 			return parentOrgItem.childOrgs.find((childOrgItem) => {
 				if (childOrgItem.orgID.toString() === orgID.toString()) return (childOrg = childOrgItem);
 			});
@@ -167,32 +108,6 @@ export function getOrgFieldsData(orgID) {
 				})
 			};
 		});
-
-		// if (selectedOrg.parentOrgID === 0) {
-		// 	return orgsData.map((parentOrgItem) => {
-		// 		return {
-		// 			...parentOrgItem,
-		// 			isSelected: true,
-		// 			childOrgs: parentOrgItem.childOrgs.map((childOrgItem) => {
-		// 				return { ...childOrgItem, isSelected: false };
-		// 			})
-		// 		};
-		// 	});
-		// } else {
-		// 	return orgsData.map((parentOrgItem) => {
-		// 		return {
-		// 			...parentOrgItem,
-		// 			isSelected: false,
-		// 			childOrgs: parentOrgItem.childOrgs.map((childOrgItem) => {
-		// 				if (childOrgItem.orgID === selectedOrg.orgID) {
-		// 					return { ...childOrgItem, isSelected: true };
-		// 				} else {
-		// 					return { ...childOrgItem, isSelected: false };
-		// 				}
-		// 			})
-		// 		};
-		// 	});
-		// }
 	});
 }
 

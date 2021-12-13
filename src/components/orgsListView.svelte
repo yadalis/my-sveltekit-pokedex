@@ -1,14 +1,11 @@
 <script>
 	import {
 		orgData,
-		//getChildOrgFieldsData,
-		//getParentOrgFieldsData,
 		cancelCurrentChanges,
 		getOrgFieldsData
 	} from '../stores/orgStore';
 	export let isDirty;
 	let newOrgIDToLoad;
-	export let currentOrgID;
 	let showPopup = false;
 </script>
 
@@ -28,13 +25,7 @@
 					on:click={() => {
 						showPopup = false;
 						$cancelCurrentChanges = true;
-						if (newOrgIDToLoad) {
-							//getChildOrgFieldsData(newOrgIDToLoad);
-							getOrgFieldsData(newOrgIDToLoad);
-						} else {
-							// getParentOrgFieldsData(100);
-							getOrgFieldsData(newOrgIDToLoad);
-						}
+						getOrgFieldsData(newOrgIDToLoad);
 					}}
 				>
 					Yes
@@ -64,7 +55,6 @@
 			on:click={() => {
 				if (org.isSelected === false) {
 					if (isDirty === false) {
-						//getParentOrgFieldsData(org.orgID);
 						getOrgFieldsData(org.orgID);
 					} else {
 						showPopup = true;
@@ -84,7 +74,6 @@
 				on:click={() => {
 					if (childOrg.isSelected === false) {
 						if (isDirty === false) {
-							//getChildOrgFieldsData(childOrg.orgID);
 							getOrgFieldsData(childOrg.orgID);
 						} else {
 							showPopup = true;
