@@ -1,6 +1,14 @@
 <script>
-	import { orgData, getChildOrgFieldsData, getParentOrgFieldsData,cancelCurrentChanges } from '../stores/orgStore';
+	import {
+		orgData,
+		//getChildOrgFieldsData,
+		//getParentOrgFieldsData,
+		cancelCurrentChanges,
+		getOrgFieldsData
+	} from '../stores/orgStore';
 	export let isDirty;
+	let newOrgIDToLoad;
+	export let currentOrgID;
 	let showPopup = false;
 </script>
 
@@ -10,21 +18,30 @@
 		class:hidden={!showPopup}
 	>
 		<div class="bg-gray-200 w-96 h-52 p-10 text-lg rounded-lg  ">
-			You have unsaved changes, changing Org will undo your current changes, do you want to proceed ?
-			<hr class="h-0.5 bg-black mt-1"/>
+			You have unsaved changes, changing Org will undo your current changes, do you want to proceed
+			?
+			<!-- {newOrgIDToLoad} - {currentOrgID} -->
+			<hr class="h-0.5 bg-black mt-1" />
 			<div class="flex justify-end">
 				<button
 					class="bg-red-200 items-center justify-center h-8 w-16 focus:bg-red-300 ring-1 ring-red-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
 					on:click={() => {
 						showPopup = false;
 						$cancelCurrentChanges = true;
+						if (newOrgIDToLoad) {
+							//getChildOrgFieldsData(newOrgIDToLoad);
+							getOrgFieldsData(newOrgIDToLoad);
+						} else {
+							// getParentOrgFieldsData(100);
+							getOrgFieldsData(newOrgIDToLoad);
+						}
 					}}
 				>
 					Yes
 				</button>
-	
+
 				<button
-					class=" bg-green-200 items-center justify-center h-8 w-16 focus:bg-red-300 ring-1 ring-green-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
+					class=" bg-green-200 items-center justify-center h-8 w-16 focus:bg-green-300 ring-1 ring-green-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
 					on:click={() => {
 						showPopup = false;
 						$cancelCurrentChanges = false;
@@ -41,13 +58,18 @@
 	</div>
 	{#each $orgData as org}
 		<div
-			class=" bg-green-50 px-3 py-1  font-semibold text-blue-6000 select-none cursor-pointer hover:bg-indigo-100"
+			class=" bg-green-50 px-3 py-1  font-semibold text-blue-6000 select-none cursor-pointer"
+			class:bg-indigo-200={org.isSelected}
+			class:hover:bg-indigo-100={!org.isSelected}
 			on:click={() => {
-				if (!isDirty) {
-					getParentOrgFieldsData(org.orgID);
-				} else {
-					showPopup = true;
-					//alert('View model has changes and you will lose those ?');
+				if (org.isSelected === false) {
+					if (isDirty === false) {
+						//getParentOrgFieldsData(org.orgID);
+						getOrgFieldsData(org.orgID);
+					} else {
+						showPopup = true;
+						newOrgIDToLoad = org.orgID;
+					}
 				}
 			}}
 		>
@@ -55,14 +77,19 @@
 		</div>
 		{#each org.childOrgs as childOrg, index}
 			<div
-				class="flex bg-gray-100 px-3 py-1 text-blue-4000 italic justify-end  select-none cursor-pointer hover:bg-indigo-100"
+				class="flex bg-gray-100 px-3 py-1 text-blue-4000 italic justify-end  select-none cursor-pointer"
 				class:bg-gray-200={index % 2 === 0}
+				class:bg-indigo-200={childOrg.isSelected}
+				class:hover:bg-indigo-100={!childOrg.isSelected}
 				on:click={() => {
-					if (!isDirty) {
-						getChildOrgFieldsData(childOrg.orgID);
-					} else {
-						showPopup = true;
-						//alert('View model has changes and you will lose those ?');
+					if (childOrg.isSelected === false) {
+						if (isDirty === false) {
+							//getChildOrgFieldsData(childOrg.orgID);
+							getOrgFieldsData(childOrg.orgID);
+						} else {
+							showPopup = true;
+							newOrgIDToLoad = childOrg.orgID;
+						}
 					}
 				}}
 			>

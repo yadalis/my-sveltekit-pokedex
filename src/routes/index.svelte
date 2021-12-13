@@ -9,7 +9,7 @@
 	let viewModel = deepCloneMe($selectedOrgDataStore);
 	let oldViewModel = deepCloneMe($selectedOrgDataStore);
 	$: isParentSelected = viewModel.childOrgs.length > 0;
-	let isInEditMode = false;
+	let isInEditMode = true;
 	$: orgName = viewModel.orgName;
 	$: orgFieldValues = viewModel.fieldValues;
 	$: isDirty =
@@ -56,7 +56,7 @@
 		<!-- left panel -->
 		<div class="p-0 bg-gray-100 flex flex-shrink-0  flex-none ">
 			<!-- Org list section -->
-			<OrgsListView {isDirty} />
+			<OrgsListView {isDirty}  currentOrgID={viewModel.orgID}/>
 			<!-- data editing section -->
 			<div class="flex flex-col bg-gray-100  flex-none w-[400px] ">
 				<!-- Org Name Heading -->
