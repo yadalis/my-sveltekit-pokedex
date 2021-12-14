@@ -120,12 +120,22 @@ let localData = [
 	// }
 ];
 
+export let finalDataSet = writable();
+finalDataSet.set(localData);
+
 export let orgData = writable();
 orgData.set(localData);
 
 orgData.subscribe((orgsData) => {
 	localData = orgsData;
+	//applyChanges();
 });
+
+export function applyChanges() {
+	finalDataSet.update((finalData) => {
+		return localData;
+	});
+}
 
 function findOrgById(orgID) {
 	let parentOrg = localData.find((parentOrgItem) => {

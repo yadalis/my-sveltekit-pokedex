@@ -1,5 +1,5 @@
 <script>
-	import { orgData } from '../stores/orgStore';
+	import { finalDataSet } from '../stores/orgStore';
 </script>
 
 <div class="flex flex-col mb-5 mt-5">
@@ -10,7 +10,7 @@
 		<div class="font-bold">Invoice Terms</div>
 	</div>
 
-	{#each $orgData as org}
+	{#each $finalDataSet as org}
 		<div class="grid grid-cols-4 gap-10 bg-gray-100 px-3 py-1  font-semibold text-blue-600">
 			<div class="">{org.orgName}</div>
 			{#each org.fieldValues as fieldValue}

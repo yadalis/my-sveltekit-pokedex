@@ -12,7 +12,8 @@
 	let viewModel = deepCloneMe($selectedOrgDataStore);
 	let oldViewModel = deepCloneMe($selectedOrgDataStore);
 	$: isParentSelected = viewModel.childOrgs.length > 0;
-	let isInEditMode = true;
+	let isInEditMode = false;
+	let isSaveDone = false;
 	$: orgName = viewModel.orgName;
 	$: orgFieldValues = viewModel.fieldValues;
 	$: isDirty =
@@ -148,7 +149,7 @@
 								saveOrgData(viewModel);
 								isDirty = false;
 								isInEditMode =false;
-
+								isSaveDone = true;
 							}}
 						>
 							Save
@@ -159,7 +160,7 @@
 		</div>
 
 		<!-- right panel -->
-		<div class="flex-auto"><OldNewChangesView {viewModel} /></div>
+		<div class="flex-auto"><OldNewChangesView {viewModel} {isSaveDone}/></div>
 	</div>
 
 	<!-- Bottom table - Full data -->
