@@ -2,9 +2,12 @@
 	import OrgsListView from '../components/orgsListView.svelte';
 	import OldNewChangesView from '../components/oldNewChangesView.svelte';
 	import FullDataSet from '../components/fullDataSet.svelte';
-	import { selectedOrgDataStore, cancelCurrentChanges } from '../stores/orgStore';
+	import { selectedOrgDataStore, cancelCurrentChanges,saveOrgData, getOrgFieldsData } from '../stores/orgStore';
 	import deepCloneMe from 'lodash/cloneDeep';
-	import { onMount } from 'svelte';
+	import { beforeUpdate } from 'svelte';
+
+	getOrgFieldsData(100);
+	
 
 	let viewModel = deepCloneMe($selectedOrgDataStore);
 	let oldViewModel = deepCloneMe($selectedOrgDataStore);
@@ -46,6 +49,8 @@
 	// 		}
 	// 	}
 	// });
+
+
 </script>
 
 <svelte:head><title>Paint 3D - full app work!</title></svelte:head>
@@ -56,7 +61,7 @@
 		<!-- left panel -->
 		<div class="p-0 bg-gray-100 flex flex-shrink-0  flex-none ">
 			<!-- Org list section -->
-			<OrgsListView {isDirty}  currentOrgID={viewModel.orgID}/>
+			<OrgsListView {isDirty} />
 			<!-- data editing section -->
 			<div class="flex flex-col bg-gray-100  flex-none w-[400px] ">
 				<!-- Org Name Heading -->
@@ -138,7 +143,13 @@
 
 						<button
 							class="bg-green-200 flex items-center justify-center h-8 w-16 focus:bg-green-300 ring-1 ring-green-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
-							on:click={() => {}}
+							on:click={() => {
+								
+								saveOrgData(viewModel);
+								isDirty = false;
+								isInEditMode =false;
+
+							}}
 						>
 							Save
 						</button>

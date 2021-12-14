@@ -64,7 +64,7 @@ let localData = [
 				childOrgs: []
 			}
 		]
-	},
+	}
 	// {
 	// 	id: 1,
 	// 	orgID: 200,
@@ -123,6 +123,10 @@ let localData = [
 export let orgData = writable();
 orgData.set(localData);
 
+orgData.subscribe((orgsData) => {
+	localData = orgsData;
+});
+
 function findOrgById(orgID) {
 	let parentOrg = localData.find((parentOrgItem) => {
 		if (parentOrgItem.orgID === orgID) {
@@ -130,33 +134,36 @@ function findOrgById(orgID) {
 		}
 	});
 
-	let childOrg;
-
 	if (parentOrg) {
 		return parentOrg;
-	} else {
-		localData.find((parentOrgItem) => {
-			return parentOrgItem.childOrgs.find((childOrgItem) => {
-				if (childOrgItem.orgID.toString() === orgID.toString()) return (childOrg = childOrgItem);
-			});
-		});
-		return childOrg;
 	}
+
+	let childOrg;
+
+	localData.find((parentOrgItem) => {
+		return parentOrgItem.childOrgs.find((childOrgItem) => {
+			if (childOrgItem.orgID.toString() === orgID.toString()) return (childOrg = childOrgItem);
+		});
+	});
+
+	return childOrg;
 }
 
 export function getOrgFieldsData(orgID) {
 	let selectedOrg = findOrgById(orgID);
 
-	selectedOrgDataStore.update((previouSelectedOrgItem) => {
-		return selectedOrg;
+	selectedOrgDataStore.update((previousSelectedOrgItem) => {
+		return {...selectedOrg, isSelected: true};
 	});
 
+	//this is updating all items in the list just to show the selected item. ???
+	//try finding and replacing just the item selected and apply the color to it.
 	orgData.update((orgsData) => {
-		return orgsData.map((parentOrgItem) => {
+		return orgsData.map((orgItem) => {
 			return {
-				...parentOrgItem,
+				...orgItem,
 				isSelected: selectedOrg.parentOrgID === 0,
-				childOrgs: parentOrgItem.childOrgs.map((childOrgItem) => {
+				childOrgs: orgItem.childOrgs.map((childOrgItem) => {
 					return { ...childOrgItem, isSelected: childOrgItem.orgID === selectedOrg.orgID };
 				})
 			};
@@ -164,4 +171,30 @@ export function getOrgFieldsData(orgID) {
 	});
 }
 
-getOrgFieldsData(125);
+export function saveOrgData(modifiedOrg) {
+	orgData.update((orgsData) => {
+		return orgsData.map((orgItem) => {
+			if (modifiedOrg.parentOrgID === 0) {
+				//this is a parent org
+				return {...modifiedOrg, childOrgs : orgItem.childOrgs.map((childOrgItem) => {
+					return {...childOrgItem, isSelected: false};
+				})};
+			}
+			else {
+				//This style works too...
+				// return {...orgItem, childOrgs : orgItem.childOrgs.map((childOrgItem) => {
+				// 	if (childOrgItem.orgID === modifiedOrg.orgID) {
+				// 		return modifiedOrg;
+				// 	} else return childOrgItem;
+				// })}
+				let updatedchildOrgs = orgItem.childOrgs.map((childOrgItem) => {
+					if (childOrgItem.orgID === modifiedOrg.orgID) {
+						return modifiedOrg;
+					} else return childOrgItem;
+				});
+
+				return {...orgItem, childOrgs : updatedchildOrgs};
+			}
+		});
+	});
+}
