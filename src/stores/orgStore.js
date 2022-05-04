@@ -1,6 +1,24 @@
 import { writable } from 'svelte/store';
 import deepCloneMe from 'lodash/cloneDeep';
 
+export const treeData = {
+	'ABC Health Care - Billing Center': ['ABC Health Care', 'Med Emporium', 'Riverside Pharmacy Services'],
+	'ABC Health Care - Billing Center ': ['ABC Health Care', 'Med Emporium', 'Riverside Pharmacy Services'],
+};
+
+export const valueFormatter = (val, node) => {
+	switch (node.type) {
+	  case 'array':
+		return `${node.circularOfId ? 'circular' : ''} `
+	  case 'object':
+		return `${node.circularOfId ? 'circular' : ''}  `
+	  case 'string':
+		return `"${val}-"`
+	  default:
+		return val
+	}
+  }
+
 export const fieldData = writable([
 	{ id: 1, fieldName: 'lateFee' },
 	{ id: 2, fieldName: 'City' },
@@ -29,9 +47,9 @@ let localData = [
 				orgID: 125,
 				orgName: 'ABC Health Care',
 				fieldValues: [
-					{ name: 'Late Fee', value: 153 },
-					{ name: 'City', value: 'Overland Park 11' },
-					{ name: 'Invoice Terms', value: 8 }
+					{ name: 'Late Fee', value: 15 },
+					{ name: 'City', value: 'Overland Park' },
+					{ name: 'Invoice Terms', value: 9 }
 				],
 				parentOrgID: 100,
 				isSelected: true,
@@ -42,9 +60,9 @@ let localData = [
 				orgID: 135,
 				orgName: 'Med Emporium',
 				fieldValues: [
-					{ name: 'Late Fee', value: 1545 },
-					{ name: 'City', value: 'Overland Park 2' },
-					{ name: 'Invoice Terms', value: 7 }
+					{ name: 'Late Fee', value: 15 },
+					{ name: 'City', value: 'Overland Park' },
+					{ name: 'Invoice Terms', value: 9 }
 				],
 				parentOrgID: 100,
 				isSelected: false,
@@ -55,9 +73,9 @@ let localData = [
 				orgID: 145,
 				orgName: 'Riverside Pharmacy Services',
 				fieldValues: [
-					{ name: 'Late Fee', value: 152222 },
-					{ name: 'City', value: 'Overland Park 3' },
-					{ name: 'Invoice Terms', value: 6 }
+					{ name: 'Late Fee', value: 15 },
+					{ name: 'City', value: 'Overland Park' },
+					{ name: 'Invoice Terms', value: 9 }
 				],
 				parentOrgID: 100,
 				isSelected: false,
@@ -163,7 +181,7 @@ export function getOrgFieldsData(orgID) {
 	let selectedOrg = findOrgById(orgID);
 
 	selectedOrgDataStore.update((previousSelectedOrgItem) => {
-		return {...selectedOrg, isSelected: true};
+		return { ...selectedOrg, isSelected: true };
 	});
 
 	//this is updating all items in the list just to show the selected item. ???
@@ -186,11 +204,13 @@ export function saveOrgData(modifiedOrg) {
 		return orgsData.map((orgItem) => {
 			if (modifiedOrg.parentOrgID === 0) {
 				//this is a parent org
-				return {...modifiedOrg, childOrgs : orgItem.childOrgs.map((childOrgItem) => {
-					return {...childOrgItem, isSelected: false};
-				})};
-			}
-			else {
+				return {
+					...modifiedOrg,
+					childOrgs: orgItem.childOrgs.map((childOrgItem) => {
+						return { ...childOrgItem, isSelected: false };
+					})
+				};
+			} else {
 				//This style works too...
 				// return {...orgItem, childOrgs : orgItem.childOrgs.map((childOrgItem) => {
 				// 	if (childOrgItem.orgID === modifiedOrg.orgID) {
@@ -203,7 +223,7 @@ export function saveOrgData(modifiedOrg) {
 					} else return childOrgItem;
 				});
 
-				return {...orgItem, childOrgs : updatedchildOrgs};
+				return { ...orgItem, childOrgs: updatedchildOrgs };
 			}
 		});
 	});

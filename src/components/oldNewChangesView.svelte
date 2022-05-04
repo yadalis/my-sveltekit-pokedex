@@ -27,7 +27,7 @@
 		<div class="">{viewModel.fieldValues[2].value}</div>
 	</div>
 </div>
-<div class="flex">
+<div class="flex justify-end">
 	<button
 		class="bg-green-200 flex items-center justify-center h-8 w-16 focus:bg-green-300 ring-1 ring-green-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
 		class:hidden={!isSaveDone}

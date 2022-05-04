@@ -2,12 +2,41 @@
 	import OrgsListView from '../components/orgsListView.svelte';
 	import OldNewChangesView from '../components/oldNewChangesView.svelte';
 	import FullDataSet from '../components/fullDataSet.svelte';
-	import { selectedOrgDataStore, cancelCurrentChanges,saveOrgData, getOrgFieldsData } from '../stores/orgStore';
+	import {
+		selectedOrgDataStore,
+		cancelCurrentChanges,
+		saveOrgData,
+		getOrgFieldsData,
+		treeData,
+		valueFormatter
+	} from '../stores/orgStore';
 	import deepCloneMe from 'lodash/cloneDeep';
 	import { beforeUpdate } from 'svelte';
+	// import TreeView from 'svelte-tree-view';
+
+	// Remove this to use the CSS variable version
+	const theme = {
+		scheme: 'harmonic16',
+		author: 'jannik siebert (https://github.com/janniks)',
+		base00: '#fff',
+		base01: '#223b54',
+		base02: '#405c79',
+		base03: '#627e99',
+		base04: '#aabcce',
+		base05: '#cbd6e2',
+		base06: '#e5ebf1',
+		base07: '#f7f9fb',
+		base08: '#bf8b56',
+		base09: '#bfbf56',
+		base0A: '#8bbf56',
+		base0B: '#56bf8b',
+		base0C: '#568bbf',
+		base0D: '#8b56bf',
+		base0E: '#bf568b',
+		base0F: '#bf5656'
+	};
 
 	getOrgFieldsData(100);
-	
 
 	let viewModel = deepCloneMe($selectedOrgDataStore);
 	let oldViewModel = deepCloneMe($selectedOrgDataStore);
@@ -50,8 +79,6 @@
 	// 		}
 	// 	}
 	// });
-
-
 </script>
 
 <svelte:head><title>Paint 3D - full app work!</title></svelte:head>
@@ -96,7 +123,11 @@
 								<div class="flex text-indigo-5000 justify-end w-28 items-center h-8 bg-gray-1000">
 									{fieldValue.name}:
 								</div>
-								<div class="-ml-12 flex items-center rounded-lg px-1 h-8 font-semibold outline-none focus:border-b-2 focus:border-indigo-400">{fieldValue.value}</div>
+								<div
+									class="-ml-12 flex items-center rounded-lg px-1 h-8 font-semibold outline-none focus:border-b-2 focus:border-indigo-400"
+								>
+									{fieldValue.value}
+								</div>
 							{/each}
 						{:else}
 							<!-- In Edit mode -->
@@ -145,10 +176,9 @@
 						<button
 							class="bg-green-200 flex items-center justify-center h-8 w-16 focus:bg-green-300 ring-1 ring-green-300 m-5 rounded-lg disabled:bg-gray-200 disabled:ring-0 disabled:text-gray-400/40"
 							on:click={() => {
-								
 								saveOrgData(viewModel);
 								isDirty = false;
-								isInEditMode =false;
+								isInEditMode = false;
 								isSaveDone = true;
 							}}
 						>
@@ -160,7 +190,16 @@
 		</div>
 
 		<!-- right panel -->
-		<div class="flex-auto"><OldNewChangesView {viewModel} {isSaveDone}/></div>
+		<div class="flex-auto">
+			<OldNewChangesView {viewModel} {isSaveDone} />
+			<div class="mt-5 flex-auto">
+				<!-- <TreeView data={treeData} {theme} {valueFormatter} recursionOpts={{
+					maxDepth: 16,
+					omitKeys: true,
+					shouldExpandNode: () => true
+				  }}/> -->
+			</div>
+		</div>
 	</div>
 
 	<!-- Bottom table - Full data -->
