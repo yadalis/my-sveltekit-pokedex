@@ -1,3 +1,9 @@
+# My notes:
+
+This project has three different individual projects, Paint3D, Pokemon & Brightree ORGs details changes,
+
+Just changed the file name to Index whhich ever you want to run.
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);

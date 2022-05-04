@@ -16,7 +16,7 @@
 	});
 </script>
 
-<h1>Photo album</h1>
+<h1>Photo album!!!</h1>
 
 <div class="photos">
 	{#each pokemons as photo}

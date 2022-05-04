@@ -16,7 +16,7 @@ const fetchPokemon = async (limit) => {
 	pokemon.set(loadedPokemon);
 };
 
-fetchPokemon(150);
+fetchPokemon(9);
 
 // setTimeout(() => {
 //     fetchPokemon(150);
