@@ -1,3 +1,14 @@
+## Suresh Y. Steps to run this project on any new machine
+
+>install node for windows
+>install npm for windows
+>npm install - this insalls all packages inside package.json file
+>nmp run dev/build etc
+    >nmp run dev -- open -H (-H is for https url)
+
+>When you app runs, it looks for any svelte file with the exatct "index" under routes folder
+
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
